@@ -8,6 +8,7 @@ const cors = require('cors');
 const authenticate = require('../auth/authenticate-middleware.js');
 const authRouter = require('../auth/auth-router.js');
 const usersRouter = require('../users/user-router');
+const bucketListsRouter = require('../bucket-lists/bucket-list-router');
 
 const sessionOptions = {
 	name: 'userCookie',
@@ -18,7 +19,7 @@ const sessionOptions = {
 	  httpOnly: true, 
 	},
 	resave: false,
-	saveUninitalized: false,
+	saveUninitialized: false,
   
 	store: new knexSessionStore({
 	  knex: require('../data/db-Config'),
@@ -39,6 +40,7 @@ server.use(session(sessionOptions));
 
 server.use('/api/auth', authRouter);
 server.use('/api/users', authenticate, usersRouter);
+server.use('/api/bucketLists', authenticate, bucketListsRouter);
 
 server.get("/", (req, res) => {
 	res.json({ message: "Its Alive!" });
