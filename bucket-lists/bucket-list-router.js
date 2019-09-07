@@ -36,7 +36,7 @@ router.put("/:id", async (req, res) => {
 	}
 
 	try {
-		const updated = await db.update(updatedlist, id);
+		const updated = await BucketLists.update(updatedlist, id);
 		res.status(201).json(updated);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -48,7 +48,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
-		const deleted = await db.remove(id);
+		const deleted = await BucketLists.remove(id);
 		res.status(201).json(deleted);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -91,7 +91,7 @@ router.put("/item/:id", async (req, res) => {
 	}
 
 	try {
-		const updated = await db.updateBucketListItem(updatedItem, id);
+		const updated = await BucketLists.updateBucketListItem(updatedItem, id);
 		res.status(201).json(updated);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -103,7 +103,7 @@ router.put("/item/:id", async (req, res) => {
 router.delete("/item/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
-		const deleted = await db.removeBucketListItem(id);
+		const deleted = await BucketLists.removeBucketListItem(id);
 		res.status(201).json(deleted);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -116,7 +116,7 @@ router.delete("/item/:id", async (req, res) => {
 // TODO this route still needs to be tested
 router.get("/pictures", async (req, res) => {
 	try {
-		const photos = await db.findPhotos();
+		const photos = await BucketLists.findPhotos();
 		res.status(201).json(photos);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -127,17 +127,15 @@ router.get("/pictures", async (req, res) => {
 // I think that we may need to pass a bucket list id into this one
 // TODO still needs to be tested.
 router.post("/pictures", async (req, res) => {
-	const photo = req.body.photo;
-
+	const photo = req.body;
 	if (!photo) {
 		res.status(401).json({
 			message:
 				"please provide a path to the photo in the body of the request as photo: ",
 		});
 	}
-
 	try {
-		const added = await db.addPhotos(photo);
+		const added = await BucketLists.addPhoto(photo);
 		res.status(201).json(added);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -161,7 +159,7 @@ router.put("/pictures/:id", async (req, res) => {
 	}
 
 	try {
-		const updated = await db.updatePhoto(newPhoto, id);
+		const updated = await BucketLists.updatePhoto(newPhoto, id);
 		res.status(201).json(updated);
 	} catch ({ message }) {
 		res.status(500).json(message);
@@ -173,7 +171,7 @@ router.put("/pictures/:id", async (req, res) => {
 router.delete("/pictures/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
-		const removed = await db.removePhoto(id);
+		const removed = await BucketLists.removePhoto(id);
 		res.status(201).json(removed);
 	} catch ({ message }) {
 		res.status(500).json(message);

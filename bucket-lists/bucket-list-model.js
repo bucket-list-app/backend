@@ -71,7 +71,7 @@ function findBucketListItem() {
 async function addBucketListItem(item) {
 	const [id] = await db("BucketListItem").insert(item);
 
-	return findById(id);
+	return findBucketListItemById(id);
 }
 
 function findBucketListItemById(id) {
@@ -85,7 +85,7 @@ async function updateBucketListItem(changes, id) {
 		.where({ id })
 		.update(changes);
 
-	return findById(id);
+	return findBucketListItemById(id);
 }
 
 function removeBucketListItem(id) {
@@ -108,7 +108,7 @@ function findPhotos() {
 async function addPhoto(photo) {
 	const [id] = await db("Photos").insert(photo);
 
-	return findById(id);
+	return findPhotoById(id);
 }
 
 function findPhotoById(id) {
@@ -122,7 +122,7 @@ async function updatePhoto(changes, id) {
 		.where({ id })
 		.update(changes);
 
-	return findById(id);
+	return findPhotoById(id);
 }
 
 function removePhoto(id) {

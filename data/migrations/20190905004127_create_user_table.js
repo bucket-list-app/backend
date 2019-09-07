@@ -53,6 +53,7 @@ exports.up = function(knex) {
 			tbl.text("description", 256).notNullable();
 		})
 		.createTable("Photos", tbl => {
+			tbl.increments();
 			tbl.text("path", 128).notNullable();
 			tbl.timestamp("time_stamp").notNullable();
 			tbl
@@ -65,6 +66,7 @@ exports.up = function(knex) {
 				.onDelete("CASCADE");
 		})
 		.createTable("JournalEntries", tbl => {
+			tbl.increments();
 			tbl.text("entry", 128).notNullable();
 			tbl.timestamp("time_stamp").notNullable();
 			tbl
@@ -77,7 +79,6 @@ exports.up = function(knex) {
 				.onDelete("CASCADE");
 		});
 };
-
 exports.down = function(knex) {
 	return knex.schema
 		.dropTableIfExists("JournalEntries")
