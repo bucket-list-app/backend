@@ -113,7 +113,6 @@ router.delete("/item/:id", async (req, res) => {
 // Pictures
 
 // Returns all findPhotos
-// TODO this route still needs to be tested
 router.get("/pictures", async (req, res) => {
 	try {
 		const photos = await BucketLists.findPhotos();
@@ -124,8 +123,6 @@ router.get("/pictures", async (req, res) => {
 });
 
 // Adds a photo to db
-// I think that we may need to pass a bucket list id into this one
-// TODO still needs to be tested.
 router.post("/pictures", async (req, res) => {
 	const photo = req.body;
 	if (!photo) {
@@ -173,6 +170,62 @@ router.delete("/pictures/:id", async (req, res) => {
 	try {
 		const removed = await BucketLists.removePhoto(id);
 		res.status(201).json(removed);
+	} catch ({ message }) {
+		res.status(500).json(message);
+	}
+});
+
+//Journal Entries
+
+//Returns all journal entries
+router.get("/entry", async (req, res) => {
+	try {
+		const journalEntries = await BucketLists.findEntries();
+		res.json(journalEntries);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to get Journal Entries" });
+	}
+});
+
+//Adds a journal entry
+router.post("/entry", async (req, res) => {
+	const journalEntryData = req.body;
+	try {
+		const journalEntry = await BucketLists.addEntry(
+			journalEntryData
+		);
+		res.status(201).json(journalEntry);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to add Journal Entry" });
+	}
+});
+
+// Updates a bucket list item
+//TODO need to test this route
+router.put("/entry/:id", async (req, res) => {
+	const id = req.params.id;
+	const updatedEntry = req.body;
+	if (!updatedEntry) {
+		res.status(400).json({
+			message:
+				"Please provide the updated entry in the body of the request and try again",
+		});
+	}
+	try {
+		const updated = await BucketLists.updateEntry(updatedEntry, id);
+		res.status(201).json(updated);
+	} catch ({ message }) {
+		res.status(500).json(message);
+	}
+});
+
+//Removes a bucket list item
+//TODO need to test this route
+router.delete("/entry/:id", async (req, res) => {
+	const id = req.params.id;
+	try {
+		const deleted = await BucketLists.removeEntry(id);
+		res.status(201).json(deleted);
 	} catch ({ message }) {
 		res.status(500).json(message);
 	}

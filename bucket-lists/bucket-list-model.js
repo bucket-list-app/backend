@@ -17,6 +17,11 @@ module.exports = {
 	findPhotoById,
 	updatePhoto,
 	removePhoto,
+	addEntry,
+	findEntries,
+	findEntryById,
+	updateEntry,
+	removeEntry,
 };
 
 ///////////////
@@ -132,3 +137,39 @@ function removePhoto(id) {
 		.del();
 }
 /////////////////////////////
+
+///////////////////
+//Journal entries//
+///////////////////
+
+function findEntries() {
+	return db("JournalEntries");
+}
+
+async function addEntry(entry) {
+	console.log(entry)
+	const [id] = await db("JournalEntries").insert(entry);
+
+	return findEntryById(id);
+}
+
+function findEntryById(id) {
+	return db("JournalEntries")
+		.where({ id })
+		.first();
+}
+
+async function updateEntry(changes, id) {
+	await db("JournalEntries")
+		.where({ id })
+		.update(changes);
+
+	return findEntryById(id);
+}
+
+function removeEntry(id) {
+	// returns removed count
+	return db("JournalEntries")
+		.where({ id })
+		.del();
+}
