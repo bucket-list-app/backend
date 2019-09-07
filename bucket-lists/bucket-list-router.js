@@ -112,7 +112,7 @@ router.delete("/item/:id", async (req, res) => {
 
 // Pictures
 
-// Returns all findPhotos
+// Returns all Photos
 router.get("/pictures", async (req, res) => {
 	try {
 		const photos = await BucketLists.findPhotos();
@@ -174,7 +174,9 @@ router.delete("/pictures/:id", async (req, res) => {
 	}
 });
 
-//Journal Entries
+//////////////////////
+// Journal Entries //
+/////////////////////
 
 //Returns all journal entries
 router.get("/entry", async (req, res) => {
@@ -190,9 +192,7 @@ router.get("/entry", async (req, res) => {
 router.post("/entry", async (req, res) => {
 	const journalEntryData = req.body;
 	try {
-		const journalEntry = await BucketLists.addEntry(
-			journalEntryData
-		);
+		const journalEntry = await BucketLists.addEntry(journalEntryData);
 		res.status(201).json(journalEntry);
 	} catch (err) {
 		res.status(500).json({ message: "Failed to add Journal Entry" });

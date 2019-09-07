@@ -1,13 +1,13 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const Users = require('./user-model');
+const Users = require("./user-model");
 
-router.get('/', (req, res) => {
-    Users.find()
-        .then(users => {
-            res.json(users);
-        })
-        .catch(err => res.send(err));
+router.get("/", (req, res) => {
+	Users.find()
+		.then(users => {
+			res.json(users);
+		})
+		.catch(err => res.send(err));
 });
 
 //Gets all users a bucket list has been shared with
@@ -25,11 +25,11 @@ router.post("/share", async (req, res) => {
 	const sharedUserData = req.body;
 	try {
 		const sharedUser = await Users.addSharedWithUser(sharedUserData);
+		console.log(sharedUser);
 		res.status(201).json(sharedUser);
 	} catch (err) {
 		res.status(500).json({ message: err });
 	}
 });
-
 
 module.exports = router;
