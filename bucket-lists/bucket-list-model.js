@@ -17,6 +17,11 @@ module.exports = {
 	findPhotoById,
 	updatePhoto,
 	removePhoto,
+	addEntry,
+	findEntries,
+	findEntryById,
+	updateEntry,
+	removeEntry,
 };
 
 ///////////////
@@ -71,7 +76,7 @@ function findBucketListItem() {
 async function addBucketListItem(item) {
 	const [id] = await db("BucketListItem").insert(item);
 
-	return findById(id);
+	return findBucketListItemById(id);
 }
 
 function findBucketListItemById(id) {
@@ -85,7 +90,7 @@ async function updateBucketListItem(changes, id) {
 		.where({ id })
 		.update(changes);
 
-	return findById(id);
+	return findBucketListItemById(id);
 }
 
 function removeBucketListItem(id) {
@@ -108,7 +113,7 @@ function findPhotos() {
 async function addPhoto(photo) {
 	const [id] = await db("Photos").insert(photo);
 
-	return findById(id);
+	return findPhotoById(id);
 }
 
 function findPhotoById(id) {
@@ -122,7 +127,7 @@ async function updatePhoto(changes, id) {
 		.where({ id })
 		.update(changes);
 
-	return findById(id);
+	return findPhotoById(id);
 }
 
 function removePhoto(id) {
@@ -132,3 +137,39 @@ function removePhoto(id) {
 		.del();
 }
 /////////////////////////////
+
+///////////////////
+//Journal entries//
+///////////////////
+
+function findEntries() {
+	return db("JournalEntries");
+}
+
+async function addEntry(entry) {
+	console.log(entry)
+	const [id] = await db("JournalEntries").insert(entry);
+
+	return findEntryById(id);
+}
+
+function findEntryById(id) {
+	return db("JournalEntries")
+		.where({ id })
+		.first();
+}
+
+async function updateEntry(changes, id) {
+	await db("JournalEntries")
+		.where({ id })
+		.update(changes);
+
+	return findEntryById(id);
+}
+
+function removeEntry(id) {
+	// returns removed count
+	return db("JournalEntries")
+		.where({ id })
+		.del();
+}
