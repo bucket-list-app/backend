@@ -152,12 +152,10 @@ router.put("/pictures/:id", async (req, res) => {
 	const newPhoto = req.body.photo;
 
 	if (!newPhoto) {
-		res
-			.status(422)
-			.json({
-				message:
-					"please provide a new photo to update with in the body of this request as {photo: newPhotoPath}",
-			});
+		res.status(422).json({
+			message:
+				"please provide a new photo to update with in the body of this request as {photo: newPhotoPath}",
+		});
 	}
 
 	try {
@@ -169,7 +167,8 @@ router.put("/pictures/:id", async (req, res) => {
 });
 
 // Removes the photo with {id}
-// TODO still needs to be
+// TODO still need to add an ID field to the photos tabel to make sure this works.
+// TODO need to test this route
 router.delete("/pictures/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
