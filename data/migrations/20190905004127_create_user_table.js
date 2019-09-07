@@ -21,7 +21,7 @@ exports.up = function(knex) {
 				.onUpdate("CASCADE")
 				.onDelete("CASCADE");
 		})
-		.createTable("BucketListUsers", tbl => {
+		.createTable("SharedWithUsers", tbl => {
 			tbl
 				.integer("user_id")
 				.unsigned()

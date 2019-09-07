@@ -5,6 +5,9 @@ module.exports = {
   find,
   findBy,
   findById,
+  addSharedWithUser,
+  findSharedWithUsers,
+  findSharedWithUserById
 };
 
 function find() {
@@ -25,4 +28,24 @@ function findById(id) {
   return db('Users')
     .where({ id })
     .first();
+}
+
+//////////////////////
+//Shared With Users//
+/////////////////////
+
+async function addSharedWithUser(user) {
+  console.log(user)
+	const [id] = await db("SharedWithUsers").insert(user);
+
+	return findSharedWithUserById(id);
+}
+
+function findSharedWithUsers() {
+	return db("SharedWithUsers");
+}
+
+function findSharedWithUserById(id) {
+  return db('SharedWithUsers')
+    .where({ id })
 }
