@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
 });
 
 //Updates bucket list
-//TODO route needs to be tested
 router.put("/:id", async (req, res) => {
 	const id = req.params.id;
 	const updatedlist = req.body;
@@ -43,8 +42,7 @@ router.put("/:id", async (req, res) => {
 	}
 });
 
-//Removes a bucket list item
-//TODO need to test this route
+//Removes a bucketlist
 router.delete("/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
@@ -79,7 +77,7 @@ router.post("/item", async (req, res) => {
 });
 
 // Updates a bucket list item
-//TODO need to test this route
+//TODO set the valie of "id" on the changed object to the /:id param before sending the updated object to the db
 router.put("/item/:id", async (req, res) => {
 	const id = req.params.id;
 	const updatedItem = req.body;
@@ -99,7 +97,6 @@ router.put("/item/:id", async (req, res) => {
 });
 
 //Removes a bucket list item
-//TODO need to test this route
 router.delete("/item/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
@@ -122,7 +119,8 @@ router.get("/pictures", async (req, res) => {
 	}
 });
 
-// Adds a photo to db
+// Adds a photo to db //
+//This method will insert the time stamp for us. Just need to pass in the path and the item id it belongs to
 router.post("/pictures", async (req, res) => {
 	const photo = req.body;
 	if (!photo) {
@@ -131,6 +129,7 @@ router.post("/pictures", async (req, res) => {
 				"please provide a path to the photo in the body of the request as photo: ",
 		});
 	}
+	photo.time_stamp = Date.now();
 	try {
 		const added = await BucketLists.addPhoto(photo);
 		res.status(201).json(added);
@@ -139,17 +138,17 @@ router.post("/pictures", async (req, res) => {
 	}
 });
 
-// Updates a photo
-// TODO Need to set up the Photos table with an unique id so that we can target them directly.
-// TODO still needs to be tested
+// Updates a photo //
+//Again, all we need here is the path and item_id
 router.put("/pictures/:id", async (req, res) => {
 	const id = req.params.id;
-	const newPhoto = req.body.photo;
+	const newPhoto = req.body;
+	newPhoto.id = id;
 
 	if (!newPhoto) {
 		res.status(422).json({
 			message:
-				"please provide a new photo to update with in the body of this request as {photo: newPhotoPath}",
+				"please provide a new photo to update with in the body of this request as {path: newPhotoPath}",
 		});
 	}
 
@@ -161,9 +160,7 @@ router.put("/pictures/:id", async (req, res) => {
 	}
 });
 
-// Removes the photo with {id}
-// TODO still need to add an ID field to the photos tabel to make sure this works.
-// TODO need to test this route
+// Removes the photo with /:id
 router.delete("/pictures/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
@@ -191,6 +188,7 @@ router.get("/entry", async (req, res) => {
 //Adds a journal entry
 router.post("/entry", async (req, res) => {
 	const journalEntryData = req.body;
+	journalEntryData.time_stamp = Date.now();
 	try {
 		const journalEntry = await BucketLists.addEntry(journalEntryData);
 		res.status(201).json(journalEntry);
@@ -200,10 +198,10 @@ router.post("/entry", async (req, res) => {
 });
 
 // Updates a bucket list item
-//TODO need to test this route
 router.put("/entry/:id", async (req, res) => {
 	const id = req.params.id;
 	const updatedEntry = req.body;
+	updatedEntry.id = id;
 	if (!updatedEntry) {
 		res.status(400).json({
 			message:
@@ -219,7 +217,6 @@ router.put("/entry/:id", async (req, res) => {
 });
 
 //Removes a bucket list item
-//TODO need to test this route
 router.delete("/entry/:id", async (req, res) => {
 	const id = req.params.id;
 	try {
