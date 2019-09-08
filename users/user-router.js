@@ -20,6 +20,17 @@ router.get("/share", async (req, res) => {
 	}
 });
 
+// Gets a list of users that share a bucketlists defigned by /:id are
+router.get("/share/:id", async (req, res) => {
+	const id = req.params.id;
+	try {
+		const sharedWith = await Users.findSharedUsersByProjectId(id);
+		res.json(sharedWith);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to get Shared Users" });
+	}
+});
+
 //adds a shared user to the bucket list
 router.post("/share", async (req, res) => {
 	const sharedUserData = req.body;

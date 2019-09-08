@@ -8,6 +8,7 @@ module.exports = {
 	addSharedWithUser,
 	findSharedWithUsers,
 	findSharedWithUserById,
+	findSharedUsersByProjectId,
 };
 
 function find() {
@@ -43,9 +44,17 @@ async function addSharedWithUser(user) {
 }
 
 function findSharedWithUsers() {
-	return db("SharedWithUsers");
+	return db("SharedWithUsers").where();
 }
 
 function findSharedWithUserById(user_id) {
 	return db("SharedWithUsers").where({ user_id });
+}
+
+function findSharedUsersByProjectId(id) {
+	return db("SharedWithUsers as swu")
+		.join("Users as u", "u.id", "swu.user_id")
+		.select("u.id")
+		.where("swu.bucketList_id", id)
+		.groupBy("u.id");
 }
