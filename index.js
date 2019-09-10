@@ -3,5 +3,5 @@ const server = require("./api/server.js");
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () =>
-	console.log(`\n === Maginc happening on port: ${PORT} === \n`)
+	console.log(`\n === Magic happening on port: ${PORT} === \n`)
 );
