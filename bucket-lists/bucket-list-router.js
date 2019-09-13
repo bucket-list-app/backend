@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.get("/:id", async (req, res) => {
+	const { id } = req.params;
+	try {
+		const bucketLists = await BucketLists.findById(id);
+		res.json(bucketLists);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to get Bucket Lists" });
+	}
+});
+
 //adds a bucket list
 router.post("/", async (req, res) => {
 	const bucketListData = req.body;

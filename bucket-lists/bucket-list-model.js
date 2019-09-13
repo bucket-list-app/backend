@@ -40,7 +40,6 @@ function findBy(filter) {
 
 async function add(bucketList) {
 	const [id] = await db("BucketList").insert(bucketList);
-
 	return findById(id);
 }
 
