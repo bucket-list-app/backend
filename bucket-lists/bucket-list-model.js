@@ -38,8 +38,12 @@ function findBy(filter) {
 	return db("BucketList").where(filter);
 }
 
-async function add(bucketList) {
-	const [id] = await db("BucketList").insert(bucketList);
+function add(bucketList) {
+	const [id] = db("BucketList").insert(bucketList)
+	.then(response => {
+		console.log(response)
+	})
+
 
 	return findById(id);
 }
