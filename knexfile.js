@@ -19,6 +19,7 @@ module.exports = {
 		connection: process.env.DATABASE_URL + '?ssl=true',
 		useNullAsDefault: true,
 		migrations: {
+			tableName: "knex_migrations",
 			directory: "./data/migrations",
 		},
 		seeds: {
