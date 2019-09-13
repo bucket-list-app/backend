@@ -8,7 +8,7 @@ module.exports = {
 	update,
 	remove,
 	addBucketListItem,
-	findBucketListItem,
+	findBucketListItems,
 	findBucketListItemById,
 	updateBucketListItem,
 	removeBucketListItem,
@@ -69,7 +69,7 @@ function remove(id) {
 ////////////////////
 //Bucket List Item//
 ////////////////////
-function findBucketListItem() {
+function findBucketListItems() {
 	return db("BucketListItem");
 }
 

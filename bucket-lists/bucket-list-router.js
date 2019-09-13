@@ -2,7 +2,21 @@ const router = require("express").Router();
 
 const BucketLists = require("./bucket-list-model");
 
+//Returns all bucket list items
+//This has to be at the top or it dont work
+router.get("/items", async (req, res) => {
+	console.log("hit")
+	try {
+		const bucketListItems = await BucketLists.findBucketListItems();
+		res.json(bucketListItems);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to get Bucket List Item" });
+	}
+});
+
+
 //Gets all bucket lists
+
 router.get("/", async (req, res) => {
 	try {
 		const bucketLists = await BucketLists.find();
@@ -21,6 +35,7 @@ router.get("/:id", async (req, res) => {
 		res.status(500).json({ message: "Failed to get Bucket List" });
 	}
 });
+
 
 //adds a bucket list
 router.post("/", async (req, res) => {
@@ -63,15 +78,7 @@ router.delete("/:id", async (req, res) => {
 	}
 });
 
-//Returns all bucket list items
-router.get("/item", async (req, res) => {
-	try {
-		const bucketListItems = await BucketLists.findBucketListItem();
-		res.json(bucketListItems);
-	} catch (err) {
-		res.status(500).json({ message: "Failed to get Bucket List Item" });
-	}
-});
+
 
 //Adds a bucket list item to a bucket list
 router.post("/item", async (req, res) => {
