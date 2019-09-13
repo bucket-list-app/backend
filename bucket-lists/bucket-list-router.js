@@ -158,7 +158,6 @@ router.post("/pictures", async (req, res) => {
 				"please provide a path to the photo in the body of the request as photo: ",
 		});
 	}
-	photo.time_stamp = Date.now();
 	try {
 		const added = await BucketLists.addPhoto(photo);
 		res.status(201).json(added);
@@ -207,7 +206,6 @@ router.delete("/pictures/:id", async (req, res) => {
 //Adds a journal entry
 router.post("/entry", async (req, res) => {
 	const journalEntryData = req.body;
-	journalEntryData.time_stamp = Date.now();
 	try {
 		const journalEntry = await BucketLists.addEntry(journalEntryData);
 		res.status(201).json(journalEntry);
