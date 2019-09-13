@@ -55,7 +55,6 @@ exports.up = function(knex) {
 		.createTable("Photos", tbl => {
 			tbl.increments();
 			tbl.text("path", 128).notNullable();
-			tbl.timestamp("time_stamp").notNullable();
 			tbl
 				.integer("item_id")
 				.unsigned()
@@ -68,7 +67,6 @@ exports.up = function(knex) {
 		.createTable("JournalEntries", tbl => {
 			tbl.increments();
 			tbl.text("entry", 128).notNullable();
-			tbl.timestamp("time_stamp").notNullable();
 			tbl
 				.integer("item_id")
 				.unsigned()
