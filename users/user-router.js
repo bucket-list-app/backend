@@ -36,7 +36,6 @@ router.post("/share", async (req, res) => {
 	const sharedUserData = req.body;
 	try {
 		const sharedUser = await Users.addSharedWithUser(sharedUserData);
-		console.log(sharedUser);
 		res.status(201).json(sharedUser);
 	} catch (err) {
 		res.status(500).json({ message: err });

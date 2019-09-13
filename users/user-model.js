@@ -37,7 +37,6 @@ function findById(id) {
 
 //TODO check this out
 async function addSharedWithUser(user) {
-	console.log(user);
 	const entries = await db("SharedWithUsers").insert(user);
 	const id = user.user_id;
 	return findSharedWithUserById(id);
