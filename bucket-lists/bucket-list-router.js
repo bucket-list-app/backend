@@ -2,8 +2,9 @@ const router = require("express").Router();
 
 const BucketLists = require("./bucket-list-model");
 
+//NOTE!!!! All gets have to be at top or they dont run.
+
 //Returns all bucket list items
-//This has to be at the top or it dont work
 router.get("/items", async (req, res) => {
 	console.log("hit")
 	try {
@@ -14,9 +15,28 @@ router.get("/items", async (req, res) => {
 	}
 });
 
+// Returns all Photos
+router.get("/pictures", async (req, res) => {
+	try {
+		const photos = await BucketLists.findPhotos();
+		res.status(201).json(photos);
+	} catch ({ message }) {
+		res.status(500).json(message);
+	}
+});
+
+//Returns all journal entries
+router.get("/entry", async (req, res) => {
+	try {
+		const journalEntries = await BucketLists.findEntries();
+		res.json(journalEntries);
+	} catch (err) {
+		res.status(500).json({ message: "Failed to get Journal Entries" });
+	}
+});
+
 
 //Gets all bucket lists
-
 router.get("/", async (req, res) => {
 	try {
 		const bucketLists = await BucketLists.find();
@@ -126,15 +146,7 @@ router.delete("/item/:id", async (req, res) => {
 
 // Pictures
 
-// Returns all Photos
-router.get("/pictures", async (req, res) => {
-	try {
-		const photos = await BucketLists.findPhotos();
-		res.status(201).json(photos);
-	} catch ({ message }) {
-		res.status(500).json(message);
-	}
-});
+
 
 // Adds a photo to db //
 //This method will insert the time stamp for us. Just need to pass in the path and the item id it belongs to
@@ -191,16 +203,6 @@ router.delete("/pictures/:id", async (req, res) => {
 //////////////////////
 // Journal Entries //
 /////////////////////
-
-//Returns all journal entries
-router.get("/entry", async (req, res) => {
-	try {
-		const journalEntries = await BucketLists.findEntries();
-		res.json(journalEntries);
-	} catch (err) {
-		res.status(500).json({ message: "Failed to get Journal Entries" });
-	}
-});
 
 //Adds a journal entry
 router.post("/entry", async (req, res) => {
